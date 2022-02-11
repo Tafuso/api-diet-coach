@@ -1,9 +1,9 @@
-import express from 'express'
+import * as express from "express";
+import routes from "./database/Routes"
 
 const app = express()
+app.use(routes)
 
-app.get('/', (req, res) => {
-  return res.send('Hello World')
-})
 
-app.listen(3333)
+
+app.listen(3333, () => console.log('Server is running'))  
