@@ -30,7 +30,7 @@ const UserController = {
 
   async create(req : Request, res : Response) {
     //method to create a new user
-    const { name, email, password } = req.body
+    const { username, email, password } = req.body
 
    try{
      //verify if user exists
@@ -40,7 +40,7 @@ const UserController = {
     //encrypting password
      const hashedPassword = await hashPassowrd(password)
 
-     const user: IUsers = {name, email, password: hashedPassword}
+     const user: IUsers = {username, email, password: hashedPassword}
 
     //sending data to db with knex
      await connection('users').insert(user)
