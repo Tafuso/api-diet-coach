@@ -1,6 +1,6 @@
 export default interface IMeals {
   id?: number,
-  id_user?: number,
+  user_id?: number,
   type_meals: string,
   date: Date,
   protein?: string,
