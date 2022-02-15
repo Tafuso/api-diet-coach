@@ -6,10 +6,6 @@ const MealsController = {
   async store(req : Request, res: Response) {
 
     const { user_id } = req.params
-    
-    const { auth } = req.headers
-    
-    if (user_id !== auth) return res.status(400).send({ message: 'Unauthorized'})
 
     const {
       type_meals,
@@ -20,8 +16,9 @@ const MealsController = {
       carbohydrate_qtd, 
       vegetable, 
       vegetable_qtd,
-    } :IMeals = req.body
+    } :IMeals =  req.body
 
+    console.log(req.body)
     const meal :IMeals= {
       user_id:  parseInt(user_id),
       type_meals,
@@ -33,8 +30,6 @@ const MealsController = {
       vegetable, 
       vegetable_qtd,
     }
-
-
     try {
       await connection('meals').insert(meal)
       
@@ -50,7 +45,7 @@ const MealsController = {
     try{
       const { user_id, x } = req.params
 
-      const mealsByUser: IMeals[]= await connection('meals').orderBy('date').where('user_id', '=', parseInt(user_id)).limit(5).offset(5 * parseInt(x))
+      const mealsByUser: IMeals[]= await  connection('meals').orderBy('date', "desc").where('user_id', '=', parseInt(user_id)).limit(5).offset(5 * parseInt(x))
       return res.status(200).send(mealsByUser)
       }
       catch(error) {
@@ -59,11 +54,7 @@ const MealsController = {
   },
 
   async delete(req: Request, res: Response) {
-    const { user_id, meal_id } = req.params
-
-    const { auth } = req.headers
-
-    if (user_id !== auth) return res.status(400).send({ message: 'Unauthorized'})
+    const { meal_id } = req.params
 
     try {
       await connection('meals').where('id', '=', parseInt(meal_id)).del()
@@ -76,11 +67,7 @@ const MealsController = {
   },
 
   async update(req: Request, res: Response) {
-    const { user_id, meal_id } = req.params
-
-    const { auth } = req.headers
-
-    if (user_id !== auth) return res.status(400).send({ message: 'Unauthorized'})
+    const { meal_id } = req.params
 
     try {
       const {

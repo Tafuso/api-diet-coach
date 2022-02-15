@@ -21,7 +21,7 @@ const SessionController = {
       if(!validPassword) return res.status(401).send({ message: "Authentication error"}) 
 
 
-      return res.status(200).send(userExists)
+      return res.status(200).send(userExists[0])
     } catch (error) {
     //If token is not valid, respond with 401 (unauthorized)
       return res.status(404).send(error)
