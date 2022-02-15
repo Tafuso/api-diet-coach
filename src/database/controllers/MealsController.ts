@@ -44,7 +44,7 @@ const MealsController = {
   async index(req: Request, res: Response) {
     try{
       const { user_id, x } = req.params
-
+      
       const mealsByUser: IMeals[]= await  connection('meals').orderBy('date', "desc").where('user_id', '=', parseInt(user_id)).limit(5).offset(5 * parseInt(x))
       return res.status(200).send(mealsByUser)
       }
